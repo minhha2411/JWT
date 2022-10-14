@@ -15,9 +15,7 @@ instance.interceptors.request.use(
       const decoded = jwt_decode(accessToken);
       // If access token expired
       if (decoded.exp < Date.now() / 1000) {
-        console.log("run here");
         await getNewToken();
-        localStorage.clear();
       }
     }
     // Do something before request is sent
@@ -31,12 +29,12 @@ instance.interceptors.request.use(
 
 const getNewToken = async () => {
   const refreshToken = localStorage.getItem("REFRESH_TOKEN");
-  const response = await axios.post("/token", {
+  const response = await axios.post("http://localhost:4000/token", {
     refreshToken,
   });
-  console.log("newToken", response);
-  if (response.body) {
-    saveToken(response.body);
+  localStorage.clear();
+  if (response.data) {
+    saveToken(response.data);
   }
 };
 

@@ -27,6 +27,9 @@ function App() {
       setLoading(false);
     }
   };
+  const handleGetPost = async () => {
+    await axios.get("/posts");
+  };
 
   return loading ? (
     <div>...Loading </div>
@@ -59,6 +62,7 @@ function App() {
           <div id="btn2">Sign Up</div>
         </a>
       </div>
+      <div onClick={handleGetPost}>Click me</div>
     </div>
   );
 }

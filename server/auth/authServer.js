@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const { users } = require("../db");
 
 const authenticate = (req, res, next) => {
   next();
@@ -11,7 +10,7 @@ const generateToken = (user) => {
       user,
     },
     process.env.SECRECT_ACCESS_KEY,
-    { expiresIn: "30s" }
+    { expiresIn: "5s" }
   );
 
   const refreshToken = jwt.sign(
@@ -25,7 +24,7 @@ const generateToken = (user) => {
   return { accessToken, refreshToken };
 };
 
-const updateToken = (userName, refreshToken) => {
+const updateToken = (userName, refreshToken, users) => {
   return users.map((user) => {
     if (users.find((el) => el.userName === userName)) {
       return {
